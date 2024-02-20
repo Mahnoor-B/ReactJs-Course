@@ -1,8 +1,9 @@
 //import logo from './logo.svg';
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand} from 'reactstrap';
 import Menu from './MenuComponent'
 import DishDetail from "./DishdetailComponent";
+import Header from './HeaderComponennt';
+import Footer from './FooterComponent';
 import { DISHES } from '../shared/dishes';
 
 
@@ -23,15 +24,12 @@ onDishSelect(dishId){
   render (){
     return (
       <div>
-        <Navbar dark color='primary'>
-          <div className='container'>
-            <NavbarBrand href='/'>Ristorante Con Fusion</NavbarBrand>
-          </div>
-        </Navbar>
+        <Header/>
         <Menu dishes = {this.state.dishes}
             onClick={(dishId)=> this.onDishSelect(dishId)}></Menu>
         <DishDetail 
             dish ={this.state.dishes.filter((dish) => dish.id === this.state.selectedDish)[0]}/>
+        <Footer/>
       </div>
     );
   }
