@@ -10,30 +10,41 @@ const minLength = (len) => (val) => !(val) || (val.length >= len);
 class CommentForm extends Component{
     constructor(props){
         super(props)
+            this.state = {
+                isModalOpen: false
+            }
+    
+            this.toggleModal = this.toggleModal.bind(this);
 
         this.handleSubmit = this.handleSubmit.bind(this);
     }
 
-    // toggleModal(){
-    //     this.setState({
-    //           isModalOpen : !this.state.isModalOpen
-    //           })
-    // }
+    toggleModal(){
+        this.setState({
+              isModalOpen : !this.state.isModalOpen
+              })
+    }
 
     handleSubmit(values){
         console.log("Current state is : " +JSON.stringify(values));
         alert("Current state is: " +JSON.stringify(values));
+        this.props.addComment(this.props.dishId, values.rating, values.yourname, values.message)
+        this.toggleModal()
     }
 
     render(){
         return (
             <div className="col-12 col-md-5">
-                {/* <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
-                    <ModalHeader toggle={this.toggleModal} >Submit Commennt</ModalHeader> */}
+                <Button outline onClick={this.toggleModal}>
+                    <span className="fa fa-pencil fa-lg"></span> Submit Comment
+                </Button>
+
+                <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                    <ModalHeader toggle={this.toggleModal} >Submit Commennt</ModalHeader>
                         <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
                             <Row className="form-group">
                                 <Label htmlFor="lastname" md={{size:6, offset:1}}>Ratings</Label>
-                                    <Col md={{size: 5, offset: 1}}>
+                                    <Col md={{size: 10, offset: 1}}>
                                         <Control.select model=".rating" name="rating"
                                             className="form-control">
                                             <option>1</option>
@@ -69,20 +80,21 @@ class CommentForm extends Component{
                                 </Row>
                                 <Row className="form-group">
                                     <Label htmlFor="message" md={{size: 6, offset: 1}}>Comment</Label>
-                                    <Col md={{size: 12, offset: 1}}>
+                                    <Col md={{size: 10, offset: 1}}>
                                         <Control.textarea model=".message" id="message" name="message"
                                             rows="12"
                                             className="form-control" />
                                     </Col>
                                 </Row>
                                 <Row className="form-group">
-                                    <Col md={{size:10, offset: 2}}>
+                                    <Col md={{size:10, offset: 1}} mt={2}>
                                         <Button type="submit" color="primary">
                                         Submit
                                         </Button>
                                     </Col>
                                 </Row>
                             </LocalForm>
+                            </Modal>
                     </div>
         )
     }

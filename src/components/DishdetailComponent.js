@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 import {Card, CardImg,CardText, CardBody, CardTitle} from 'reactstrap'
 import { Link } from "react-router-dom";
-import { Button, Modal, ModalHeader} from 'reactstrap';
 
 import CommentForm from "./CommentFormComponent";
 
 import { Breadcrumb,BreadcrumbItem } from "reactstrap";
+import { addComment } from "../redux/actionCreators";
 
 function  RenderDish({dish}){
         if(dish!=null){
@@ -27,7 +27,7 @@ function  RenderDish({dish}){
         }
     }
 
-function RenderComments({comments}){
+function RenderComments({comments, addComment, dishId}){
     console.log("comments", comments)
         if(comments!=null){
             return(
@@ -43,6 +43,7 @@ function RenderComments({comments}){
                         </uli>
                         </div>
                 )})}
+                <CommentForm dishId ={dishId} addComment={addComment}></CommentForm>
                 </div>
         )}
         else {
@@ -53,22 +54,6 @@ function RenderComments({comments}){
     }
 
     class DishDetail extends Component {
-        constructor(props){
-            super(props)
-
-            this.state = {
-                isModalOpen: false
-            }
-    
-            this.toggleModal = this.toggleModal.bind(this);
-        }
-
-        toggleModal(){
-            this.setState({
-                  isModalOpen : !this.state.isModalOpen
-                  })
-        }
-
         render(){
             return (
                 <div className="container">
@@ -88,18 +73,17 @@ function RenderComments({comments}){
                             <RenderDish dish ={this.props.dish}/>
                         </div>  
                         <div className="col-12 col-md-5 mt-2">
-                            <RenderComments comments = {this.props.comments}/> 
-                            <Button outline onClick={this.toggleModal}>
+                            <RenderComments comments = {this.props.comments}
+                                addComment = {this.props.addComment}
+                                dishId = {this.props.dish.id}/> 
+                            {/* <Button outline onClick={this.toggleModal}>
                                 <span className="fa fa-pencil fa-lg"></span> Submit Comment
-                             </Button>
-                            <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
+                             </Button> */}
+                            {/* <Modal isOpen={this.state.isModalOpen} toggle={this.toggleModal}>
                             <ModalHeader toggle={this.toggleModal}>Submit Comment</ModalHeader>
-                                <CommentForm></CommentForm>
-                            </Modal>        
-                        </div>    
-                        <div className="col-12 col-md-5 mt-2">
-                           
-                        </div>               
+                                <CommentForm dishId ={this.props.dishId} addComment={addComment}></CommentForm>
+                            </Modal>         */}
+                        </div>                 
                     </div>
                 </div>
         )}
