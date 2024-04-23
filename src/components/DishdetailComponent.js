@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import CommentForm from "./CommentFormComponent";
 
 import { Breadcrumb,BreadcrumbItem } from "reactstrap";
-import { addComment } from "../redux/actionCreators";
+import {Loading} from './LoadingComponent'
 
 function  RenderDish({dish}){
         if(dish!=null){
@@ -54,7 +54,31 @@ function RenderComments({comments, addComment, dishId}){
     }
 
     class DishDetail extends Component {
+        constructor(props){
+            super(props)
+        }
+
         render(){
+            if(this.props.isLoading){
+                return (
+                    <div className="container">
+                        <div className="row">
+                            <Loading/>
+                        </div>
+                    </div>
+                )
+            }
+    
+            else if(this.props.errmess){
+                return(
+                    <div className="container">
+                    <div className="row">
+                        <h4>{this.props.errmess}</h4>
+                    </div>
+                </div>
+                )
+            }
+
             return (
                 <div className="container">
                     <div className="row">
