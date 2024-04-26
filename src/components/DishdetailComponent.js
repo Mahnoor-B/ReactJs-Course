@@ -6,13 +6,14 @@ import CommentForm from "./CommentFormComponent";
 
 import { Breadcrumb,BreadcrumbItem } from "reactstrap";
 import {Loading} from './LoadingComponent'
+import { basesUrl } from "../shared/baseUrl";
 
 function  RenderDish({dish}){
         if(dish!=null){
             return (
                 <div>
                     <Card>
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardImg width="100%" src={basesUrl + dish.image} alt={dish.name} />
                         <CardBody>
                             <CardTitle>{dish.name}</CardTitle>
                             <CardText>{dish.description}</CardText>
@@ -57,7 +58,6 @@ function RenderComments({comments, addComment, dishId}){
         constructor(props){
             super(props)
         }
-
         render(){
             if(this.props.isLoading){
                 return (
@@ -69,11 +69,11 @@ function RenderComments({comments, addComment, dishId}){
                 )
             }
     
-            else if(this.props.errmess){
+            else if(this.props.errMess){
                 return(
                     <div className="container">
                     <div className="row">
-                        <h4>{this.props.errmess}</h4>
+                        <h4>{this.props.errMess}</h4>
                     </div>
                 </div>
                 )
